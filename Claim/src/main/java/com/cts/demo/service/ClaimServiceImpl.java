@@ -14,7 +14,6 @@ public class ClaimServiceImpl implements ClaimService {
 
 	@Override
 	public String saveClaim(Claim claim) {
-		// TODO Auto-generated method stub
 		Claim c = repository.save(claim);
 		if (c != null)
 			return "saved Successfully";
