@@ -1,15 +1,15 @@
-package com.cts.service;
+package com.cts.demo.service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cts.exception.CustomerNotFoundException;
-import com.cts.model.Customer;
-import com.cts.repository.CustomerRepository;
+import com.cts.demo.exception.CustomerNotFoundException;
+import com.cts.demo.model.Customer;
+import com.cts.demo.repository.CustomerRepository;
 
-@Service
+@Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
@@ -53,5 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer searchCustomerByName(String customerName) {
 		return repository.findByCustomerName(customerName);
 	}
+
+	
 
 }

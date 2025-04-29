@@ -1,4 +1,4 @@
-package com.cts.model;
+package com.cts.demo.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

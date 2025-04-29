@@ -1,7 +1,7 @@
-package com.cts.service;
+package com.cts.demo.service;
 
-import com.cts.exception.CustomerNotFoundException;
-import com.cts.model.Customer;
+import com.cts.demo.exception.CustomerNotFoundException;
+import com.cts.demo.model.Customer;
 
 public interface CustomerService {
 	public abstract String saveCustomer(Customer customer);
