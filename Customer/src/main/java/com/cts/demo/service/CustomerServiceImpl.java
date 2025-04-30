@@ -1,5 +1,6 @@
 package com.cts.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return repository.findByCustomerName(customerName);
 	}
 
-	
+	@Override
+	public List<Customer> getAllCustomer() {
+
+		return repository.findAll();
+	}
 
 }

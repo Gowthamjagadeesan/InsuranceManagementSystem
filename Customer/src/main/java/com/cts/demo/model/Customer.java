@@ -19,5 +19,15 @@ public class Customer {
 	private String customerEmail;
 	private String customerPhone;
 	private String customerAddress;
+	private long policyId;
+
+	public Customer(String customerName, String customerEmail, String customerPhone, String customerAddress,
+			long policyId) {
+		super();
+		this.customerName = customerName;
+		this.customerEmail = customerEmail;
+		this.customerPhone = customerPhone;
+		this.customerAddress = customerAddress;
+	}
 
 }
