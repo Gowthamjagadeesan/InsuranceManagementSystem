@@ -1,13 +1,84 @@
 package com.cts.demo;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.cts.demo.exception.AgentNotFoundException;
+import com.cts.demo.model.Agent;
+import com.cts.demo.repository.AgentRepository;
+import com.cts.demo.service.AgentServiceImpl;
 
 @SpringBootTest
 class AgentApplicationTests {
 
+	@Mock
+	AgentRepository repository;
+
+	@InjectMocks
+	AgentServiceImpl service;
+
 	@Test
-	void contextLoads() {
+	void saveTest() {
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
+		Mockito.when(repository.save(agent)).thenReturn(agent);
+		String response = service.saveAgent(agent);
+		assertEquals("Agent Saved Successfully", response);
+	}
+
+	@Test
+	void updateTest() {
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
+		Mockito.when(repository.save(agent)).thenReturn(agent);
+		Agent cust = service.updateAgent(agent);
+		assertEquals(agent, cust);
+	}
+
+	@Test
+	void deleteTest() {
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
+		long userId = agent.getAgentId();
+		Mockito.doNothing().when(repository).deleteById(userId);
+		String response = service.deleteAgent(userId);
+		assertEquals("Agent deleted successfully", response);
+
+	}
+
+	@Test
+	void searchAgentByIdTest() throws AgentNotFoundException {
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
+		long agentId = 21113016;
+		agent.setAgentId(agentId);
+		Mockito.when(repository.findById(agentId)).thenReturn(Optional.of(agent));
+		Agent foundAgentById = service.searchAgentById(agentId);
+		assertEquals(agent, foundAgentById);
+	}
+
+	@Test
+	void searchAgentByNameTest() throws AgentNotFoundException {
+		String agentName = "Gowtham";
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
+		Mockito.when(repository.findByAgentName(agentName)).thenReturn(agent);
+		Agent foundAgentByName = service.searchAgentByName(agentName);
+		assertEquals(agent, foundAgentByName);
+	}
+
+	@Test
+	void getAllAgentTest() {
+		List<Agent> agents = Arrays.asList(
+				new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321),
+				new Agent(44, "Bharathi", "bharathiannadurai@gmail.com", "Health Policy", 321));
+		Mockito.when(repository.findAll()).thenReturn(agents);
+		List<Agent> custs = service.getAllAgent();
+		assertEquals(agents, custs);
 	}
 
 }
