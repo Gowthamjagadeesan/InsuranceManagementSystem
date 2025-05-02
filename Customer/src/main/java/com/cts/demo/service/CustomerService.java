@@ -17,4 +17,6 @@ public interface CustomerService {
 	public abstract Customer searchCustomerByName(String customerName);
 
 	public abstract List<Customer> getAllCustomer();
+	
+	public abstract Customer assignPoliciesToCustomer(long policyId,long customerId) throws CustomerNotFoundException;
 }

@@ -61,4 +61,14 @@ public class CustomerServiceImpl implements CustomerService {
 		return repository.findAll();
 	}
 
+	@Override
+	public Customer assignPoliciesToCustomer(long policyId, long customerId) throws CustomerNotFoundException {
+		int result=repository.assignPoliciesToCustomer(policyId, customerId);
+		if(result>0) 
+			return searchCustomerById(customerId);
+		else
+			return null;
+			
+	}
+
 }

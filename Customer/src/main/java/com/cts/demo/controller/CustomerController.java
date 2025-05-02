@@ -45,5 +45,10 @@ public class CustomerController {
 	public Customer searchCustomerByName(@PathVariable("custName") String customerName) {
 		return service.searchCustomerByName(customerName);
 	}
+	
+	@PutMapping("/assignPoliciesToCustomer/{pid}/{cid}")
+	public Customer assignPoliciesToCustomer(@PathVariable("pid") long policyId, @PathVariable("cid") long customerId) throws CustomerNotFoundException {
+		return service.assignPoliciesToCustomer(policyId, customerId);
+	}
 
 }
