@@ -47,9 +47,16 @@ public class AgentController {
 	public Agent searchAgentByName(@PathVariable("aname") String AgentName) throws AgentNotFoundException {
 		return service.searchAgentByName(AgentName);
 	}
-	
+
 	@GetMapping("/searchAll")
-	public List<Agent> searchAll(){
+	public List<Agent> searchAll() {
 		return service.getAllAgent();
 	}
+
+	@PutMapping("/assignPoliciesToAgent/{pid}/{aid}/{ptype}")
+	public Agent assignPoliciesToAgent(@PathVariable("pid") long policyId, @PathVariable("aid") long agentId,
+			@PathVariable("ptype") String policyType) throws AgentNotFoundException {
+		return service.assignPoliciesToAgent(policyId, agentId, policyType);
+	}
+
 }
