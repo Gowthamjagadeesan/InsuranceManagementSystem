@@ -1,5 +1,6 @@
 package com.cts.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cts.demo.exception.CustomerNotFoundException;
 import com.cts.demo.model.Customer;
+import com.cts.demo.model.Policy1;
 import com.cts.demo.repository.CustomerRepository;
 
 @Service("customerService")
@@ -62,13 +64,27 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer assignPoliciesToCustomer(long policyId, long customerId) throws CustomerNotFoundException {
-		int result=repository.assignPoliciesToCustomer(policyId, customerId);
-		if(result>0) 
-			return searchCustomerById(customerId);
-		else
-			return null;
-			
+	public Customer assignPoliciesToCustomer(long policyId, long customerId, String policyType)
+			throws CustomerNotFoundException {
+		Customer customer = repository.findById(customerId).get();
+		if (customer == null) {
+			throw new CustomerNotFoundException("Try a valid customer Id...");
+		}
+
+		else {
+			Policy1 policy = new Policy1();
+			List<Policy1> list = new ArrayList<>();
+			for (Policy1 pol : customer.getPolicies()) {
+				list.add(pol);
+			}
+			policy.setPolicyId(policyId);
+			policy.setPolicyType(policyType);
+			list.add(policy);
+			customer.setPolicies(list);
+			repository.save(customer);
+			return customer;
+		}
+
 	}
 
 }

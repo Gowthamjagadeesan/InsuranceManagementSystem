@@ -1,5 +1,7 @@
 package com.cts.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,10 +47,11 @@ public class CustomerController {
 	public Customer searchCustomerByName(@PathVariable("custName") String customerName) {
 		return service.searchCustomerByName(customerName);
 	}
-	
-	@PutMapping("/assignPoliciesToCustomer/{pid}/{cid}")
-	public Customer assignPoliciesToCustomer(@PathVariable("pid") long policyId, @PathVariable("cid") long customerId) throws CustomerNotFoundException {
-		return service.assignPoliciesToCustomer(policyId, customerId);
+
+	@PutMapping("/assignPoliciesToCustomer/{pid}/{cid}/{pType}")
+	public Customer assignPoliciesToCustomer(@PathVariable("pid") long policyId, @PathVariable("cid") long customerId,
+			@PathVariable("pType") String policyType) throws CustomerNotFoundException {
+		return service.assignPoliciesToCustomer(policyId, customerId, policyType);
 	}
 
 }
