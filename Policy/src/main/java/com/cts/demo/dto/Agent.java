@@ -19,5 +19,5 @@ public class Agent {
 	private String contactInfo;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "agent_id", referencedColumnName = "agentId")
-	private List<Policy> policies;
+	private List<Policy2> policies;
 }

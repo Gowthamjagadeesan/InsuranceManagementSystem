@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Policy {
+public class Policy2 {
 	private long policyId;
 	private String assignedPolicies;
 }

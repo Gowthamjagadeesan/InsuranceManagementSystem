@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
-import com.cts.demo.dto.PolicyAgentResponseDto;
-import com.cts.demo.dto.PolicyCustResponseDto;
 import com.cts.demo.feignclient.AgentClient;
 import com.cts.demo.feignclient.CustomerClient;
+import com.cts.demo.feignclient.NotificationClient;
 import com.cts.demo.project.Policy;
 import com.cts.demo.repository.policyRepository;
 
@@ -27,9 +26,14 @@ public class policyServiceImpl implements policyService {
 	@Autowired
 	AgentClient agentClient;
 
+	@Autowired
+	NotificationClient notificationClient;
+
 	@Override
 	public String savePolicy(Policy policy) {
 		Policy policy1 = repository.save(policy);
+		notificationClient.notify("A New Policy is been created", policy1.getPolicyId(),
+				policy1.getPolicyId());
 		if (policy1 != null) {
 			return "Policy saved Successfully";
 		} else {
@@ -66,6 +70,7 @@ public class policyServiceImpl implements policyService {
 
 	@Override
 	public Customer assignPolicyToCustomer(long policyId, long customerId, String policyType) {
+		notificationClient.notify(policyType + " is assigne to you", customerId, policyId);
 
 		return customerClient.assignPoliciesToCustomer(policyId, customerId, policyType);
 	}
