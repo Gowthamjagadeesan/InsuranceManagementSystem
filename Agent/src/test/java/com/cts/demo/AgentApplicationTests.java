@@ -30,69 +30,93 @@ class AgentApplicationTests {
 
 	@Test
 	void saveTest() {
-		
-		Policy policy = new Policy();
-		policy.setAssignedPolicies("Health Policy");
-		policy.setPolicyId(321);
-		Policy policy1 = new Policy();
-		policy1.setAssignedPolicies("Health Policy");
-		policy1.setPolicyId(321);
+
+		Policy p1 = new Policy();
+		p1.setAssignedPolicies("Health");
+		p1.setPolicyId(201);
 		List<Policy> policies = new ArrayList<>();
-		policies.add(policy);
-		policies.add(policy1);
-		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com",policies);
-	
-		Agent agent1 = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com",policies);
-		Mockito.when(repository.save(agent)).thenReturn(agent1);
-		String response = service.saveAgent(agent);
+		policies.add(p1);
+		Agent agent1 = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies);
+		Mockito.when(repository.save(agent1)).thenReturn(agent1);
+		String response = service.saveAgent(agent1);
 		assertEquals("Agent Saved Successfully", response);
 	}
 
-//	@Test
-//	void updateTest() {
-//		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
-//		Mockito.when(repository.save(agent)).thenReturn(agent);
-//		Agent cust = service.updateAgent(agent);
-//		assertEquals(agent, cust);
-//	}
-//
-//	@Test
-//	void deleteTest() {
-//		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
-//		long userId = agent.getAgentId();
-//		Mockito.doNothing().when(repository).deleteById(userId);
-//		String response = service.deleteAgent(userId);
-//		assertEquals("Agent deleted successfully", response);
-//
-//	}
-//
-//	@Test
-//	void searchAgentByIdTest() throws AgentNotFoundException {
-//		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
-//		long agentId = 21113016;
-//		agent.setAgentId(agentId);
-//		Mockito.when(repository.findById(agentId)).thenReturn(Optional.of(agent));
-//		Agent foundAgentById = service.searchAgentById(agentId);
-//		assertEquals(agent, foundAgentById);
-//	}
-//
-//	@Test
-//	void searchAgentByNameTest() throws AgentNotFoundException {
-//		String agentName = "Gowtham";
-//		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321);
-//		Mockito.when(repository.findByAgentName(agentName)).thenReturn(agent);
-//		Agent foundAgentByName = service.searchAgentByName(agentName);
-//		assertEquals(agent, foundAgentByName);
-//	}
-//
-//	@Test
-//	void getAllAgentTest() {
-//		List<Agent> agents = Arrays.asList(
-//				new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", "Health Policy", 321),
-//				new Agent(44, "Bharathi", "bharathiannadurai@gmail.com", "Health Policy", 321));
-//		Mockito.when(repository.findAll()).thenReturn(agents);
-//		List<Agent> custs = service.getAllAgent();
-//		assertEquals(agents, custs);
-//	}
+	@Test
+	void updateTest() {
+		Policy p1 = new Policy();
+		p1.setAssignedPolicies("Health");
+		p1.setPolicyId(201);
+		List<Policy> policies = new ArrayList<>();
+		policies.add(p1);
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies);
+		Mockito.when(repository.save(agent)).thenReturn(agent);
+		Agent cust = service.updateAgent(agent);
+		assertEquals(agent, cust);
+	}
+
+	@Test
+	void deleteTest() {
+		Policy p1 = new Policy();
+		p1.setAssignedPolicies("Health");
+		p1.setPolicyId(201);
+		List<Policy> policies = new ArrayList<>();
+		policies.add(p1);
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies);
+		long userId = agent.getAgentId();
+		Mockito.doNothing().when(repository).deleteById(userId);
+		String response = service.deleteAgent(userId);
+		assertEquals("Agent deleted successfully", response);
+
+	}
+
+	@Test
+	void searchAgentByIdTest() throws AgentNotFoundException {
+		Policy p1 = new Policy();
+		p1.setAssignedPolicies("Health");
+		p1.setPolicyId(201);
+		List<Policy> policies = new ArrayList<>();
+		policies.add(p1);
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies);
+		long agentId = 21113016;
+		agent.setAgentId(agentId);
+		Mockito.when(repository.findById(agentId)).thenReturn(Optional.of(agent));
+		Agent foundAgentById = service.searchAgentById(agentId);
+		assertEquals(agent, foundAgentById);
+	}
+
+	@Test
+	void searchAgentByNameTest() throws AgentNotFoundException {
+		String agentName = "Gowtham";
+		Policy p1 = new Policy();
+		p1.setAssignedPolicies("Health");
+		p1.setPolicyId(201);
+		List<Policy> policies = new ArrayList<>();
+		policies.add(p1);
+		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies);
+		Mockito.when(repository.findByAgentName(agentName)).thenReturn(agent);
+		Agent foundAgentByName = service.searchAgentByName(agentName);
+		assertEquals(agent, foundAgentByName);
+	}
+
+	@Test
+	void getAllAgentTest() {
+		Policy p1 = new Policy();
+		p1.setAssignedPolicies("Health");
+		p1.setPolicyId(201);
+		List<Policy> policies = new ArrayList<>();
+		policies.add(p1);
+
+		Policy p2 = new Policy();
+		p2.setAssignedPolicies("Gold");
+		p2.setPolicyId(202);
+		List<Policy> policies2 = new ArrayList<>();
+		policies2.add(p2);
+		List<Agent> agents = Arrays.asList(new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies),
+				new Agent(44, "Bharathi", "bharathiannadurai@gmail.com", policies2));
+		Mockito.when(repository.findAll()).thenReturn(agents);
+		List<Agent> custs = service.getAllAgent();
+		assertEquals(agents, custs);
+	}
 
 }

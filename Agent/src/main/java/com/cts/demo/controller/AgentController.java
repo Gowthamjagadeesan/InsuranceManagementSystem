@@ -3,6 +3,7 @@ package com.cts.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,27 +25,27 @@ public class AgentController {
 	AgentService service;
 
 	@PostMapping("/save")
-	public String saveAgent(@RequestBody Agent Agent) {
+	public String saveAgent(@RequestBody @Validated Agent Agent) {
 		return service.saveAgent(Agent);
 	}
 
 	@PutMapping("/update")
-	public Agent updateAgent(@RequestBody Agent Agent) {
+	public Agent updateAgent(@RequestBody @Validated Agent Agent) {
 		return service.updateAgent(Agent);
 	}
 
 	@DeleteMapping("/delete/{aid}")
-	public String deleteAgent(@PathVariable("aid") long AgentId) {
+	public String deleteAgent(@PathVariable("aid") @Validated long AgentId) {
 		return service.deleteAgent(AgentId);
 	}
 
 	@GetMapping("/searchById/{aid}")
-	public Agent searchAgentById(@PathVariable("aid") long AgentId) throws AgentNotFoundException {
+	public Agent searchAgentById(@PathVariable("aid") @Validated long AgentId) throws AgentNotFoundException {
 		return service.searchAgentById(AgentId);
 	}
 
 	@GetMapping("/searchByName/{aname}")
-	public Agent searchAgentByName(@PathVariable("aname") String AgentName) throws AgentNotFoundException {
+	public Agent searchAgentByName(@PathVariable("aname") @Validated String AgentName) throws AgentNotFoundException {
 		return service.searchAgentByName(AgentName);
 	}
 
