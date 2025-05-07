@@ -12,7 +12,7 @@ public interface ClaimService {
 
 	public abstract String claimStatus(long claimId);
 
-	public abstract Claim reviewClaimByIdAndName(long claimId) throws ClaimNotFoundException;
+	public abstract Claim reviewClaimByIdAndValidityPeriod(long claimId) throws ClaimNotFoundException;
 
 	public abstract Claim getClaimById(long claimId) throws ClaimNotFoundException;
 

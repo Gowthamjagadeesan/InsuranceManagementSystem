@@ -29,9 +29,9 @@ public class ClaimController {
 		return service.fileClaim(claim);
 	}
 
-	@PutMapping("/reviewClaimByName/{cid}")
+	@PutMapping("/reviewClaimByValidityPeriod/{cid}")
 	public Claim reviewClaim(@PathVariable("cid") long claimId) throws ClaimNotFoundException {
-		return service.reviewClaimByIdAndName(claimId);
+		return service.reviewClaimByIdAndValidityPeriod(claimId);
 	}
 
 	@PutMapping("/reviewClaimByAmount/{cid}")

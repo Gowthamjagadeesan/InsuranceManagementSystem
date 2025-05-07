@@ -16,6 +16,6 @@ public class Policy {
 	private double premiumAmount;
 	private String coverageDetails;
 	private LocalDate validityPeriod;
-	private long customerId;
-	private long agentId;
+//	private long customerId;
+//	private long agentId;
 }
