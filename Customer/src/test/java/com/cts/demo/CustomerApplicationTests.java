@@ -39,7 +39,7 @@ class CustomerApplicationTests {
 				policies);
 		Mockito.when(repository.save(customer)).thenReturn(customer);
 		String response = service.saveCustomer(customer);
-		assertEquals("Customer saved succussfully", response);
+		assertEquals("Customer saved successfully", response);
 	}
 
 	@Test

@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cts.demo.dto.Policy;
 import com.cts.demo.exception.ClaimNotFoundException;
+import com.cts.demo.feignclient.NotificationClient;
 import com.cts.demo.feignclient.PolicyClient;
 import com.cts.demo.model.Claim;
 import com.cts.demo.repository.ClaimRepository;
@@ -30,6 +31,9 @@ class ClaimApplicationTests {
 
 	@Mock
 	PolicyClient policyClient;
+
+	@Mock
+	NotificationClient notificationClient;
 
 	@Test
 	void saveTest() {

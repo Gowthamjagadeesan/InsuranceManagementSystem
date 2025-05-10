@@ -20,6 +20,7 @@ import com.cts.demo.dto.Policy1;
 import com.cts.demo.dto.Policy2;
 import com.cts.demo.feignclient.AgentClient;
 import com.cts.demo.feignclient.CustomerClient;
+import com.cts.demo.feignclient.NotificationClient;
 import com.cts.demo.project.Policy;
 import com.cts.demo.repository.policyRepository;
 import com.cts.demo.service.policyServiceImpl;
@@ -35,6 +36,9 @@ class PolicyApplicationTests {
 
 	@Mock
 	CustomerClient customerClient;
+	
+	@Mock
+	NotificationClient notificationClient;
 
 	@InjectMocks
 	policyServiceImpl service;
@@ -93,7 +97,7 @@ class PolicyApplicationTests {
 		policies.add(p1);
 		Customer customer = new Customer(2113017, "Bharath", "bharathrahmuthukumaran@gmail.com", "6382669477", "salem",
 				policies);
-
+		Mockito.when(notificationClient.notify(null, 0, 0)).thenReturn(null);
 		Mockito.when(customerClient.assignPoliciesToCustomer(policy1.getPolicyId(), 1, policy1.getPolicyName()))
 				.thenReturn(customer);
 		Customer response = service.assignPolicyToCustomer(policy1.getPolicyId(), 1, policy1.getPolicyName());
