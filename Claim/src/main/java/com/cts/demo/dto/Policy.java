@@ -6,16 +6,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//Lombok annotation to generate getters, setters, toString, equals, and hashCode methods
 @Data
+
+//Lombok annotation to generate a constructor with all fields
 @AllArgsConstructor
+
+//Lombok annotation to generate a no-argument constructor
 @NoArgsConstructor
 public class Policy {
 
+//Unique identifier for the policy
 	private long policyId;
+
+//Name or title of the policy
 	private String policyName;
+
+//Premium amount associated with the policy
 	private double premiumAmount;
+
+//Description of what the policy covers
 	private String coverageDetails;
+
+//Date until which the policy is valid
 	private LocalDate validityPeriod;
-//	private long customerId;
-//	private long agentId;
 }

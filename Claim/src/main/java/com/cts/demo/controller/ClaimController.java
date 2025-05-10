@@ -2,6 +2,8 @@ package com.cts.demo.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,50 +15,69 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.demo.exception.ClaimNotFoundException;
-import com.cts.demo.feignclient.PolicyClient;
 import com.cts.demo.model.Claim;
 import com.cts.demo.service.ClaimService;
 
+//Marks this class as a REST controller to handle HTTP requests
 @RestController
+
+//Base URL mapping for all endpoints in this controller
 @RequestMapping("/claim")
 public class ClaimController {
 
+//Logger instance for logging controller activity
+	Logger log = LoggerFactory.getLogger(ClaimController.class);
+
+//Injecting the ClaimService to delegate business logic
 	@Autowired
 	ClaimService service;
 
+//Endpoint to file a new claim
 	@PostMapping("/file")
 	public String save(@RequestBody Claim claim) {
+		log.info("Inside controller of the save claim module");
 		return service.fileClaim(claim);
 	}
 
+//Endpoint to review a claim based on its validity period
 	@PutMapping("/reviewClaimByValidityPeriod/{cid}")
 	public Claim reviewClaim(@PathVariable("cid") long claimId) throws ClaimNotFoundException {
+		log.info("Inside controller of the review claim by id and Validity period module");
 		return service.reviewClaimByIdAndValidityPeriod(claimId);
 	}
 
+//Endpoint to review a claim based on the claim amount
 	@PutMapping("/reviewClaimByAmount/{cid}")
 	public Claim reviewClaimByAmount(@PathVariable("cid") long claimId) throws ClaimNotFoundException {
+		log.info("Inside controller of the review claim by id and amount module");
 		return service.reviewClaimByIdAndAmount(claimId);
 	}
 
+//Endpoint to get the status of a claim
 	@GetMapping("/claimStatus/{cid}")
 	public String claimStatus(@PathVariable("cid") long claimId) {
+		log.info("Inside controller of the get claim status module");
 		return service.claimStatus(claimId);
 	}
 
+//Endpoint to retrieve a claim by its ID
 	@GetMapping("/retrieveClaimById/{cid}")
 	public Claim getClaimById(@PathVariable("cid") long claimId) throws ClaimNotFoundException {
+		log.info("Inside controller of the get claim by Id module");
 		return service.getClaimById(claimId);
 	}
 
+//Endpoint to retrieve all claims
 	@GetMapping("/retrieveAll")
 	public List<Claim> getAllClaims() {
+		log.info("Inside controller of the get list of all claims module");
 		return service.getAllClaims();
 	}
 
+//Endpoint to delete a claim by its ID
 	@DeleteMapping("/deleteById/{cid}")
 	public String deleteClaimById(@PathVariable("cid") long claimId) {
+		log.info("Inside controller of the delete claim by Id module");
 		return service.deleteClaimById(claimId);
 	}
-
 }
