@@ -14,46 +14,50 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//Lombok annotation to generate getters, setters, toString, equals, and hashCode methods
+/**
+ * Represents an Agent entity mapped to a database table. Includes validation
+ * and relationship mappings.
+ */
 @Data
-
-//Marks this class as a JPA entity mapped to a database table
 @Entity
-
-//Lombok annotation to generate a constructor with all fields
 @AllArgsConstructor
-
-//Lombok annotation to generate a no-argument constructor
 @NoArgsConstructor
 public class Agent {
 
-//Primary key for the Agent entity
+	/**
+	 * Primary key for the Agent entity. Must be greater than 10.
+	 */
 	@Id
-//Validation to ensure agentId is greater than 10
 	@Min(value = 10, message = "The value should be greater than 10")
 	private long agentId;
 
-//Validation to ensure agentName is not null or empty
+	/**
+	 * Name of the agent. Cannot be null or empty.
+	 */
 	@NotEmpty(message = "Agent Name should not be null or blank")
 	private String agentName;
 
-//Validation to ensure contactInfo is not null or empty
+	/**
+	 * Contact information for the agent. Cannot be null or empty.
+	 */
 	@NotEmpty(message = "Agent contact_info Should not be null or blank")
 	private String contactInfo;
 
-//One-to-many relationship with Policy entity
-//CascadeType.ALL ensures all operations (persist, merge, remove, etc.) are cascaded
-//FetchType.EAGER loads policies immediately with the agent
-//JoinColumn defines the foreign key in the Policy table referencing agentId
+	/**
+	 * List of policies associated with the agent. Uses a one-to-many relationship
+	 * with cascading and eager fetching.
+	 */
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "agent_id", referencedColumnName = "agentId")
 	private List<Policy> policies;
 
-//Custom constructor excluding policies list, useful for creating agents without policies
+	/**
+	 * Custom constructor excluding the policies list. Useful for creating agent
+	 * instances without associated policies.
+	 */
 	public Agent(@NotEmpty(message = "Agent Id Should not be empty") long agentId,
 			@NotEmpty(message = "Agent Name should not be null or blank") String agentName,
 			@NotEmpty(message = "Agent contact_info Should not be null or blank") String contactInfo) {
-		super();
 		this.agentId = agentId;
 		this.agentName = agentName;
 		this.contactInfo = contactInfo;

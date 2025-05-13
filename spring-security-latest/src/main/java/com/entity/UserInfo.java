@@ -19,7 +19,7 @@ public class UserInfo {
     private String name;
     private String email;
     private String password;
-    private String roles;
+	private String roles;
 	public int getId() {
 		return id;
 	}

@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
-import com.cts.demo.dto.PolicyAgentResponseDto;
-import com.cts.demo.dto.PolicyCustResponseDto;
 import com.cts.demo.project.Policy;
 
 //Service interface for handling business logic related to Policy operations

@@ -1,9 +1,5 @@
 package com.cts.demo.service;
 
-import java.util.List;
-
-import com.cts.demo.entity.Notification;
-
 //Service interface for handling notification-related operations
 public interface NotificationService {
 

@@ -18,7 +18,6 @@ public class UserService {
 	public String addUser(UserInfo userInfo) {
 		String name = userInfo.getName();
 		UserInfo obj1 = repository.findByName(name).orElse(null);
-		System.out.println(obj1);
 		if (obj1 == null) {
 			userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 			repository.save(userInfo);

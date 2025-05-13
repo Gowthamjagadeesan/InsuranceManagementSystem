@@ -12,7 +12,6 @@ import com.cts.demo.dto.Policy;
 public interface PolicyClient {
 
 	// Maps an HTTP GET request to the method below
-	// This will call the endpoint: GET /policy/retrieveById/{pid}
 	@GetMapping("/retrieveById/{pid}")
 
 	// Method to retrieve a Policy object by its ID

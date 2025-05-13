@@ -5,33 +5,67 @@ import java.util.List;
 import com.cts.demo.exception.ClaimNotFoundException;
 import com.cts.demo.model.Claim;
 
-//Service interface for handling business logic related to insurance claims
+/**
+ * Service interface for handling business logic related to insurance claims.
+ */
 public interface ClaimService {
 
-	// Method to file a new claim
-	// Accepts a Claim object and returns a confirmation message
-	public abstract String fileClaim(Claim claim);
+	/**
+	 * Files a new insurance claim.
+	 *
+	 * @param claim the claim to be filed
+	 * @return confirmation message
+	 */
+	String fileClaim(Claim claim);
 
-	// Method to review a claim based on its ID and the claim amount
-	// Throws ClaimNotFoundException if the claim is not found
-	public abstract Claim reviewClaimByIdAndAmount(long claimId) throws ClaimNotFoundException;
+	/**
+	 * Reviews a claim based on its ID and the claim amount.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the reviewed claim
+	 * @throws ClaimNotFoundException if the claim is not found
+	 */
+	Claim reviewClaimByIdAndAmount(long claimId) throws ClaimNotFoundException;
 
-	// Method to retrieve the status of a claim by its ID
-	public abstract String claimStatus(long claimId);
+	/**
+	 * Retrieves the status of a claim by its ID.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the status of the claim
+	 */
+	String claimStatus(long claimId);
 
-	// Method to review a claim based on its ID and the validity period of the
-	// associated policy
-	// Throws ClaimNotFoundException if the claim is not found
-	public abstract Claim reviewClaimByIdAndValidityPeriod(long claimId) throws ClaimNotFoundException;
+	/**
+	 * Reviews a claim based on its ID and the validity period of the associated
+	 * policy.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the reviewed claim
+	 * @throws ClaimNotFoundException if the claim is not found
+	 */
+	Claim reviewClaimByIdAndValidityPeriod(long claimId) throws ClaimNotFoundException;
 
-	// Method to retrieve a claim by its ID
-	// Throws ClaimNotFoundException if the claim is not found
-	public abstract Claim getClaimById(long claimId) throws ClaimNotFoundException;
+	/**
+	 * Retrieves a claim by its ID.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the claim object
+	 * @throws ClaimNotFoundException if the claim is not found
+	 */
+	Claim getClaimById(long claimId) throws ClaimNotFoundException;
 
-	// Method to retrieve all claims from the database
-	public abstract List<Claim> getAllClaims();
+	/**
+	 * Retrieves all claims from the database.
+	 *
+	 * @return list of all claims
+	 */
+	List<Claim> getAllClaims();
 
-	// Method to delete a claim by its ID
-	// Returns a confirmation message
-	public abstract String deleteClaimById(long claimId);
+	/**
+	 * Deletes a claim by its ID.
+	 *
+	 * @param claimId the ID of the claim to delete
+	 * @return confirmation message
+	 */
+	String deleteClaimById(long claimId);
 }

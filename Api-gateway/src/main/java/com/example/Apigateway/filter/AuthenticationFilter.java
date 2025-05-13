@@ -66,13 +66,16 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 			return path.startsWith("/agent") && method.equalsIgnoreCase("PUT")
 					|| path.startsWith("/claim") && (method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("get")
 							|| method.equalsIgnoreCase("DELETE"))
-					|| path.startsWith("/customer") || path.startsWith("/notify") || path.startsWith("/policy") && !path.startsWith("/policy/assignPoliciesToAgent")
-							&& (method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("DELETE"));
+					|| path.startsWith("/customer") || path.startsWith("/notify")
+					|| path.startsWith("/policy") && !path.startsWith("/policy/assignPoliciesToAgent")
+							&& (method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("DELETE"))
+					|| path.startsWith("/policy") && method.equalsIgnoreCase("GET");
 		} else if ("CUSTOMER".equalsIgnoreCase(role)) {
-			return path.startsWith("/customer")
-					&& (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT"))
+			return path.startsWith("/customer") && (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT"))
 					|| path.startsWith("/claim")
-							&& (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("DELETE"));
+							&& (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("DELETE"))
+					|| path.startsWith("/policy") && method.equalsIgnoreCase("GET")
+					|| path.startsWith("/claim/retrieveClaimById") || path.startsWith("/claim/claimStatus");
 
 		}
 		return false;

@@ -16,26 +16,30 @@ import com.cts.demo.feignclient.PolicyClient;
 import com.cts.demo.model.Claim;
 import com.cts.demo.repository.ClaimRepository;
 
-//Marks this class as a Spring service component with the name "claimService"
+/**
+ * Service implementation for handling business logic related to insurance
+ * claims.
+ */
 @Service("claimService")
 public class ClaimServiceImpl implements ClaimService {
 
-	// Injects the ClaimRepository to interact with the database
 	@Autowired
 	ClaimRepository repository;
 
-	// Injects the Feign client to communicate with the Policy microservice
 	@Autowired
 	PolicyClient policyClient;
 
-	// Injects the Feign client to send notifications
 	@Autowired
 	NotificationClient notificationClient;
 
-	// Logger for logging information and debugging
 	Logger log = LoggerFactory.getLogger(ClaimServiceImpl.class);
 
-	// Files a new claim and saves it to the database
+	/**
+	 * Files a new claim and saves it to the database.
+	 *
+	 * @param claim the claim to be filed
+	 * @return confirmation message
+	 */
 	@Override
 	public String fileClaim(Claim claim) {
 		log.info("Inside service implementation of the file claim module");
@@ -43,7 +47,14 @@ public class ClaimServiceImpl implements ClaimService {
 		return (c != null) ? "New claim request has been filed successfully" : "Something went wrong";
 	}
 
-	// Reviews a claim based on its amount and updates status accordingly
+	/**
+	 * Reviews a claim based on its amount and updates its status. Sends
+	 * notifications based on the outcome.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the updated claim
+	 * @throws ClaimNotFoundException if the claim is not found
+	 */
 	@Override
 	public Claim reviewClaimByIdAndAmount(long claimId) throws ClaimNotFoundException {
 		log.info("Inside service implementation of review claim by amount module");
@@ -77,7 +88,12 @@ public class ClaimServiceImpl implements ClaimService {
 		return repository.findById(claimId).get();
 	}
 
-	// Returns the status of a claim and sends a notification
+	/**
+	 * Retrieves the status of a claim and sends a notification.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the current status of the claim
+	 */
 	@Override
 	public String claimStatus(long claimId) {
 		log.info("Inside service implementation of getting claim status module");
@@ -91,7 +107,14 @@ public class ClaimServiceImpl implements ClaimService {
 		return status;
 	}
 
-	// Reviews a claim based on the policy's validity period
+	/**
+	 * Reviews a claim based on the validity period of the associated policy.
+	 * Updates the claim status and sends notifications accordingly.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the updated claim
+	 * @throws ClaimNotFoundException if the claim is not found
+	 */
 	@Override
 	public Claim reviewClaimByIdAndValidityPeriod(long claimId) throws ClaimNotFoundException {
 		log.info("Inside service implementation of review claim by Validity period module");
@@ -122,7 +145,13 @@ public class ClaimServiceImpl implements ClaimService {
 		return repository.findById(claimId).get();
 	}
 
-	// Retrieves a claim by its ID
+	/**
+	 * Retrieves a claim by its ID.
+	 *
+	 * @param claimId the ID of the claim
+	 * @return the claim object
+	 * @throws ClaimNotFoundException if the claim is not found
+	 */
 	@Override
 	public Claim getClaimById(long claimId) throws ClaimNotFoundException {
 		log.info("Inside service implementation of Get claim by Id module");
@@ -135,14 +164,23 @@ public class ClaimServiceImpl implements ClaimService {
 		}
 	}
 
-	// Retrieves all claims from the database
+	/**
+	 * Retrieves all claims from the database.
+	 *
+	 * @return list of all claims
+	 */
 	@Override
 	public List<Claim> getAllClaims() {
 		log.info("Inside service implementation of Get all claims module");
 		return repository.findAll();
 	}
 
-	// Deletes a claim by its ID
+	/**
+	 * Deletes a claim by its ID.
+	 *
+	 * @param claimId the ID of the claim to delete
+	 * @return confirmation message
+	 */
 	@Override
 	public String deleteClaimById(long claimId) {
 		log.info("Inside service implementation of Delete claim By Id module");

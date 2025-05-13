@@ -16,56 +16,88 @@ import com.cts.demo.exception.CustomerNotFoundException;
 import com.cts.demo.model.Customer;
 import com.cts.demo.service.CustomerService;
 
-//Marks this class as a REST controller, meaning it handles HTTP requests and returns JSON/XML responses
+/**
+ * REST controller for handling customer-related HTTP requests.
+ */
 @RestController
-
-//Base URL path for all endpoints in this controller
 @RequestMapping("/customer")
 public class CustomerController {
 
-	// Logger for logging request and process information
 	Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
-	// Injects the CustomerService to delegate business logic
 	@Autowired
 	CustomerService service;
 
-	// Endpoint to create a new customer
+	/**
+	 * Creates a new customer.
+	 *
+	 * @param customer the customer to be created
+	 * @return confirmation message
+	 */
 	@PostMapping("/create")
 	public String saveCustomer(@RequestBody Customer customer) {
 		logger.info("Creating customer: {}", customer);
 		return service.saveCustomer(customer);
 	}
 
-	// Endpoint to update an existing customer
+	/**
+	 * Updates an existing customer.
+	 *
+	 * @param customer the customer with updated details
+	 * @return the updated customer object
+	 */
 	@PutMapping("/update")
 	public Customer updateCustomer(@RequestBody Customer customer) {
 		logger.info("Updating customer: {}", customer);
 		return service.updateCustomer(customer);
 	}
 
-	// Endpoint to delete a customer by ID
+	/**
+	 * Deletes a customer by ID.
+	 *
+	 * @param customerId the ID of the customer to delete
+	 * @return confirmation message
+	 */
 	@DeleteMapping("/delete/{custId}")
 	public String deleteCustomer(@PathVariable("custId") long customerId) {
 		logger.info("Deleting customer with ID: {}", customerId);
 		return service.deleteCustomer(customerId);
 	}
 
-	// Endpoint to search for a customer by ID
+	/**
+	 * Searches for a customer by ID.
+	 *
+	 * @param customerId the ID of the customer to find
+	 * @return the customer object
+	 * @throws CustomerNotFoundException if the customer is not found
+	 */
 	@GetMapping("/searchById/{custId}")
 	public Customer searchCustomerById(@PathVariable("custId") long customerId) throws CustomerNotFoundException {
 		logger.info("Searching customer by ID: {}", customerId);
 		return service.searchCustomerById(customerId);
 	}
 
-	// Endpoint to search for a customer by name
+	/**
+	 * Searches for a customer by name.
+	 *
+	 * @param customerName the name of the customer to find
+	 * @return the customer object
+	 */
 	@GetMapping("/searchByName/{custName}")
 	public Customer searchCustomerByName(@PathVariable("custName") String customerName) {
 		logger.info("Searching customer by name: {}", customerName);
 		return service.searchCustomerByName(customerName);
 	}
 
-	// Endpoint to assign a policy to a customer
+	/**
+	 * Assigns a policy to a customer.
+	 *
+	 * @param policyId   the ID of the policy
+	 * @param customerId the ID of the customer
+	 * @param policyType the type of the policy
+	 * @return the updated customer object
+	 * @throws CustomerNotFoundException if the customer is not found
+	 */
 	@PutMapping("/assignPoliciesToCustomer/{pid}/{cid}/{pType}")
 	public Customer assignPoliciesToCustomer(@PathVariable("pid") long policyId, @PathVariable("cid") long customerId,
 			@PathVariable("pType") String policyType) throws CustomerNotFoundException {

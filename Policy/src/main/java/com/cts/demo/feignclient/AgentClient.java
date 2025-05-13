@@ -12,13 +12,13 @@ import com.cts.demo.dto.Agent;
 @FeignClient(name = "AGENT", path = "/agent")
 public interface AgentClient {
 
-	// Maps to GET /agent/searchById/{aid}
-	// Retrieves an Agent by their ID
+
+	
 	@GetMapping("/searchById/{aid}")
 	public Agent getAgent(@PathVariable("aid") long agentId);
 
-	// Maps to PUT /agent/assignPoliciesToAgent/{pid}/{aid}/{pType}
-	// Assigns a policy to an agent by policy ID, agent ID, and policy type
+
+
 	@PutMapping("/assignPoliciesToAgent/{pid}/{aid}/{pType}")
 	public Agent assignPoliciesToAgent(@PathVariable("pid") long policyId, @PathVariable("aid") long customerId,
 			@PathVariable("pType") String policyType);

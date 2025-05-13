@@ -13,23 +13,28 @@ import com.cts.demo.entity.Notification;
 import com.cts.demo.feignclient.PolicyClient;
 import com.cts.demo.repository.NotificationRepository;
 
-//Marks this class as a Spring service component with the name "notificationService"
+/**
+ * Service implementation for handling notification-related business logic.
+ */
 @Service("notificationService")
 public class NotificationServiceImpl implements NotificationService {
 
-	// Logger for logging information and debugging
 	Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
-	// Injects the NotificationRepository to interact with the database
 	@Autowired
 	NotificationRepository repository;
 
-	// Injects the Feign client to retrieve policy details from the POLICY
-	// microservice
 	@Autowired
 	PolicyClient policyClient;
 
-	// Saves a notification to the database
+	/**
+	 * Saves a notification to the database.
+	 *
+	 * @param message    the notification message
+	 * @param customerId the ID of the customer
+	 * @param policyId   the ID of the policy
+	 * @return confirmation message
+	 */
 	@Override
 	public String saveNotification(String message, long customerId, long policyId) {
 		logger.info("Saving notification - Message: '{}', Customer ID: {}, Policy ID: {}", message, customerId,
@@ -43,23 +48,27 @@ public class NotificationServiceImpl implements NotificationService {
 		return "Notification saved Successfully";
 	}
 
-	// Sends a notification only if the policy is nearing expiry (less than 10 days
-	// left)
+	/**
+	 * Sends a notification only if the associated policy is nearing expiry (less
+	 * than 10 days left).
+	 * 
+	 * @param message    the notification message
+	 * @param customerId the ID of the customer
+	 * @param policyId   the ID of the policy
+	 * @return result message indicating whether the notification was saved
+	 */
 	@Override
 	public String sendNotification(String message, long customerId, long policyId) {
 		logger.info("Sending notification - Message: '{}', Customer ID: {}, Policy ID: {}", message, customerId,
 				policyId);
 
-		// Retrieve policy details using Feign client
 		Policy policy = policyClient.retrievePolicy(policyId);
 		LocalDate validityPeriod = policy.getValidityPeriod();
 		LocalDate today = LocalDate.now();
 
-		// Calculate days remaining until policy expiry
 		long daysBetween = ChronoUnit.DAYS.between(today, validityPeriod);
 		logger.debug("Days until policy expiry: {}", daysBetween);
 
-		// Save notification only if policy is expiring soon
 		if (daysBetween < 10) {
 			logger.info("Policy is nearing expiry. Saving notification.");
 			saveNotification(message, customerId, policyId);

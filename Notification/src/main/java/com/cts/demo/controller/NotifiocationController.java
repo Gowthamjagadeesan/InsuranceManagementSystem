@@ -10,22 +10,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.demo.service.NotificationService;
 
-//Marks this class as a REST controller that handles HTTP requests and returns JSON responses
+/**
+ * REST controller for handling notification-related HTTP requests.
+ */
 @RestController
-
-//Base URL path for all endpoints in this controller
 @RequestMapping("/notify")
 public class NotifiocationController {
 
-	// Logger for logging request and process information
 	private static final Logger logger = LoggerFactory.getLogger(NotifiocationController.class);
 
-	// Injects the NotificationService to handle business logic
 	@Autowired
 	NotificationService service;
 
-	// Endpoint to save a notification
-	// Example: POST /notify/noti/Your%20policy%20is%20approved/101/202
+	/**
+	 * Saves a notification to the system.
+	 * 
+	 * Example: POST /notify/noti/Your%20policy%20is%20approved/101/202
+	 *
+	 * @param message    the notification message
+	 * @param customerId the ID of the customer
+	 * @param policyId   the ID of the policy
+	 * @return confirmation message
+	 */
 	@PostMapping("/noti/{msg}/{cId}/{pId}")
 	public String notify(@PathVariable("msg") String message, @PathVariable("cId") long customerId,
 			@PathVariable("pId") long policyId) {
@@ -34,9 +40,17 @@ public class NotifiocationController {
 		return service.saveNotification(message, customerId, policyId);
 	}
 
-	// Endpoint to send a notification (could include additional logic like
-	// email/SMS in the service layer)
-	// Example: POST /notify/send/Your%20claim%20is%20approved/101/202
+	/**
+	 * Sends a notification to the customer. This could include additional logic
+	 * like email or SMS in the service layer.
+	 * 
+	 * Example: POST /notify/send/Your%20claim%20is%20approved/101/202
+	 *
+	 * @param message    the notification message
+	 * @param customerId the ID of the customer
+	 * @param policyId   the ID of the policy
+	 * @return confirmation message
+	 */
 	@PostMapping("/send/{message}/{cId}/{pId}")
 	public String sendNotification(@PathVariable("message") String message, @PathVariable("cId") long customerId,
 			@PathVariable("pId") long policyId) {

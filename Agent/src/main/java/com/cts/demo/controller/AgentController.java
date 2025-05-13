@@ -19,62 +19,97 @@ import com.cts.demo.exception.AgentNotFoundException;
 import com.cts.demo.model.Agent;
 import com.cts.demo.service.AgentService;
 
-//Marks this class as a REST controller to handle HTTP requests
 @RestController
-//Base URL path for all endpoints in this controller
 @RequestMapping("/agent")
 public class AgentController {
 
-//Logger instance for logging controller activities
 	Logger log = LoggerFactory.getLogger(AgentController.class);
 
-//Injecting the AgentService to delegate business logic
 	@Autowired
 	AgentService service;
 
-//Endpoint to save a new agent
+	/**
+	 * Handles HTTP POST requests to save a new agent.
+	 * 
+	 * @param agent the agent object to be saved
+	 * @return a confirmation message from the service layer
+	 */
 	@PostMapping("/save")
-	public String saveAgent(@RequestBody @Validated Agent Agent) {
+	public String saveAgent(@RequestBody @Validated Agent agent) {
 		log.info("activating save agent in controller");
-		return service.saveAgent(Agent);
+		return service.saveAgent(agent);
 	}
 
-//Endpoint to update an existing agent
+	/**
+	 * Handles HTTP PUT requests to update an existing agent.
+	 * 
+	 * @param agent the updated agent object
+	 * @return the updated agent object from the service layer
+	 */
 	@PutMapping("/update")
-	public Agent updateAgent(@RequestBody @Validated Agent Agent) {
+	public Agent updateAgent(@RequestBody @Validated Agent agent) {
 		log.info("activating update agent in controller");
-		return service.updateAgent(Agent);
+		return service.updateAgent(agent);
 	}
 
-//Endpoint to delete an agent by ID
+	/**
+	 * Handles HTTP DELETE requests to delete an agent by ID.
+	 * 
+	 * @param agentId the ID of the agent to be deleted
+	 * @return a confirmation message from the service layer
+	 */
 	@DeleteMapping("/delete/{aid}")
-	public String deleteAgent(@PathVariable("aid") @Validated long AgentId) {
+	public String deleteAgent(@PathVariable("aid") @Validated long agentId) {
 		log.info("activating delete agent in controller");
-		return service.deleteAgent(AgentId);
+		return service.deleteAgent(agentId);
 	}
 
-//Endpoint to search for an agent by ID
+	/**
+	 * Handles HTTP GET requests to retrieve an agent by ID.
+	 * 
+	 * @param agentId the ID of the agent to be retrieved
+	 * @return the agent object if found
+	 * @throws AgentNotFoundException if the agent is not found
+	 */
 	@GetMapping("/searchById/{aid}")
-	public Agent searchAgentById(@PathVariable("aid") @Validated long AgentId) throws AgentNotFoundException {
+	public Agent searchAgentById(@PathVariable("aid") @Validated long agentId) throws AgentNotFoundException {
 		log.info("activating the module search agent by Id in controller");
-		return service.searchAgentById(AgentId);
+		return service.searchAgentById(agentId);
 	}
 
-//Endpoint to search for an agent by name
+	/**
+	 * Handles HTTP GET requests to retrieve an agent by name.
+	 * 
+	 * @param agentName the name of the agent to be retrieved
+	 * @return the agent object if found
+	 * @throws AgentNotFoundException if the agent is not found
+	 */
 	@GetMapping("/searchByName/{aname}")
-	public Agent searchAgentByName(@PathVariable("aname") @Validated String AgentName) throws AgentNotFoundException {
+	public Agent searchAgentByName(@PathVariable("aname") @Validated String agentName) throws AgentNotFoundException {
 		log.info("activating the module search agent by name in controller");
-		return service.searchAgentByName(AgentName);
+		return service.searchAgentByName(agentName);
 	}
 
-//Endpoint to retrieve all agents
+	/**
+	 * Handles HTTP GET requests to retrieve all agents.
+	 * 
+	 * @return a list of all agent objects
+	 */
 	@GetMapping("/searchAll")
 	public List<Agent> searchAll() {
 		log.info("activating search all agent in controller");
 		return service.getAllAgent();
 	}
 
-//Endpoint to assign a policy to an agent
+	/**
+	 * Handles HTTP PUT requests to assign a policy to an agent.
+	 * 
+	 * @param policyId   the ID of the policy to assign
+	 * @param agentId    the ID of the agent to whom the policy is assigned
+	 * @param policyType the type of the policy
+	 * @return the updated agent object with the assigned policy
+	 * @throws AgentNotFoundException if the agent is not found
+	 */
 	@PutMapping("/assignPoliciesToAgent/{pid}/{aid}/{ptype}")
 	public Agent assignPoliciesToAgent(@PathVariable("pid") long policyId, @PathVariable("aid") long agentId,
 			@PathVariable("ptype") String policyType) throws AgentNotFoundException {
