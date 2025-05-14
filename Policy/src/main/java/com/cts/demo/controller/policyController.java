@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
+import com.cts.demo.exception.PolicyNotFoundException;
 import com.cts.demo.project.Policy;
 import com.cts.demo.service.policyService;
 
@@ -49,7 +50,7 @@ public class policyController {
 
 	// Endpoint to retrieve a policy by its ID
 	@GetMapping("/retrieveById/{pid}")
-	public Policy retrievePolicy(@PathVariable("pid") long policyId) {
+	public Policy retrievePolicy(@PathVariable("pid") long policyId) throws PolicyNotFoundException {
 		logger.info("Retrieving policy by ID: {}", policyId);
 		return service.retrievePolicy(policyId);
 	}

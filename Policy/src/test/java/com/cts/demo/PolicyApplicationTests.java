@@ -18,6 +18,7 @@ import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
 import com.cts.demo.dto.Policy1;
 import com.cts.demo.dto.Policy2;
+import com.cts.demo.exception.PolicyNotFoundException;
 import com.cts.demo.feignclient.AgentClient;
 import com.cts.demo.feignclient.CustomerClient;
 import com.cts.demo.feignclient.NotificationClient;
@@ -36,7 +37,7 @@ class PolicyApplicationTests {
 
 	@Mock
 	CustomerClient customerClient;
-	
+
 	@Mock
 	NotificationClient notificationClient;
 
@@ -60,7 +61,7 @@ class PolicyApplicationTests {
 	}
 
 	@Test
-	void retrievePolicy() {
+	void retrievePolicy() throws PolicyNotFoundException {
 		Policy policy1 = new Policy(123, "Health Policy", 80000, "hospinal expences", LocalDate.of(2025, 12, 07));
 		Mockito.when(repository.findById(123L)).thenReturn(Optional.of(policy1));
 		Policy result = service.retrievePolicy(123L);

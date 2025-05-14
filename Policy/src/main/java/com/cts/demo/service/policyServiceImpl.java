@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
+import com.cts.demo.exception.PolicyNotFoundException;
 import com.cts.demo.feignclient.AgentClient;
 import com.cts.demo.feignclient.CustomerClient;
 import com.cts.demo.feignclient.NotificationClient;
@@ -63,7 +64,7 @@ public class policyServiceImpl implements policyService {
 
 	// Retrieves a policy by ID
 	@Override
-	public Policy retrievePolicy(long policyId) {
+	public Policy retrievePolicy(long policyId) throws PolicyNotFoundException {
 		logger.info("Retrieving policy with ID: {}", policyId);
 		Optional<Policy> optional = repository.findById(policyId);
 		if (optional.isPresent()) {
@@ -71,7 +72,7 @@ public class policyServiceImpl implements policyService {
 			return optional.get();
 		} else {
 			logger.warn("Policy not found with ID: {}", policyId);
-			return null;
+			throw new PolicyNotFoundException("Enter a valid Policy Id");
 		}
 	}
 

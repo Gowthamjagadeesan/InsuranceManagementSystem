@@ -59,7 +59,7 @@ public class AgentServiceImpl implements AgentService {
 	public String deleteAgent(long agentId) {
 		log.info("Inside service Implementation of delete agent module");
 		repository.deleteById(agentId);
-		log.info("Agent " + agentId + " was deleted successfully");
+		log.info("Agent was deleted successfully");
 		return "Agent deleted successfully";
 	}
 

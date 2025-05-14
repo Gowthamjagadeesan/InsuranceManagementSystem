@@ -84,8 +84,12 @@ public class ClaimServiceImpl implements ClaimService {
 			notificationClient.notify("Claim status Changed to REJECTED!!!! Kindly verify", claim.getCustomerId(),
 					policy.getPolicyId());
 		}
-
-		return repository.findById(claimId).get();
+		Optional<Claim> optionalClaim = repository.findById(claimId);
+		if (optionalClaim.isPresent()) {
+			return optionalClaim.get();
+		} else {
+			throw new ClaimNotFoundException("The claim is not present");
+		}
 	}
 
 	/**
@@ -141,8 +145,12 @@ public class ClaimServiceImpl implements ClaimService {
 			notificationClient.notify("Your claim validity period is expired", claim.getCustomerId(),
 					policy.getPolicyId());
 		}
-
-		return repository.findById(claimId).get();
+		Optional<Claim> optionalClaim = repository.findById(claimId);
+		if (optionalClaim.isPresent()) {
+			return optionalClaim.get();
+		} else {
+			throw new ClaimNotFoundException("The claim is not present");
+		}
 	}
 
 	/**

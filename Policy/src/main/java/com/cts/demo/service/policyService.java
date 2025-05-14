@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
+import com.cts.demo.exception.PolicyNotFoundException;
 import com.cts.demo.project.Policy;
 
 //Service interface for handling business logic related to Policy operations
@@ -16,7 +17,7 @@ public interface policyService {
 	public abstract Policy updatePolicy(Policy policy);
 
 	// Retrieves a policy by its ID
-	public abstract Policy retrievePolicy(long policyId);
+	public abstract Policy retrievePolicy(long policyId) throws PolicyNotFoundException;
 
 	// Archives (or deletes) a policy by its ID
 	public abstract String archivePolicy(long policyId);
