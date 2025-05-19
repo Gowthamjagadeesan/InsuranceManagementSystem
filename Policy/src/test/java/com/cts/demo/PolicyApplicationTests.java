@@ -98,7 +98,7 @@ class PolicyApplicationTests {
 		policies.add(p1);
 		Customer customer = new Customer(2113017, "Bharath", "bharathrahmuthukumaran@gmail.com", "6382669477", "salem",
 				policies);
-		Mockito.when(notificationClient.notify(null, 0, 0)).thenReturn(null);
+		Mockito.when(notificationClient.notify(null, 0, 0,null)).thenReturn(null);
 		Mockito.when(customerClient.assignPoliciesToCustomer(policy1.getPolicyId(), 1, policy1.getPolicyName()))
 				.thenReturn(customer);
 		Customer response = service.assignPolicyToCustomer(policy1.getPolicyId(), 1, policy1.getPolicyName());

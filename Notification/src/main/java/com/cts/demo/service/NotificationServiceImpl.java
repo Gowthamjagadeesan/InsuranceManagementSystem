@@ -6,6 +6,8 @@ import java.time.temporal.ChronoUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.cts.demo.dto.Policy;
@@ -25,6 +27,9 @@ public class NotificationServiceImpl implements NotificationService {
 	NotificationRepository repository;
 
 	@Autowired
+	private JavaMailSender mailSender;
+
+	@Autowired
 	PolicyClient policyClient;
 
 	/**
@@ -36,7 +41,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @return confirmation message
 	 */
 	@Override
-	public String saveNotification(String message, long customerId, long policyId) {
+	public String saveNotification(String message, long customerId, long policyId, String email) {
 		logger.info("Saving notification - Message: '{}', Customer ID: {}, Policy ID: {}", message, customerId,
 				policyId);
 		Notification notification = new Notification();
@@ -44,6 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
 		notification.setCustomerId(customerId);
 		notification.setPolicyId(policyId);
 		repository.save(notification);
+		sendMail(email, message, email);
 		logger.info("Notification saved successfully for Customer ID: {}", customerId);
 		return "Notification saved Successfully";
 	}
@@ -58,7 +64,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @return result message indicating whether the notification was saved
 	 */
 	@Override
-	public String sendNotification(String message, long customerId, long policyId) {
+	public String sendNotification(String message, long customerId, long policyId, String mail) {
 		logger.info("Sending notification - Message: '{}', Customer ID: {}, Policy ID: {}", message, customerId,
 				policyId);
 
@@ -71,11 +77,22 @@ public class NotificationServiceImpl implements NotificationService {
 
 		if (daysBetween < 10) {
 			logger.info("Policy is nearing expiry. Saving notification.");
-			saveNotification(message, customerId, policyId);
+			saveNotification(message, customerId, policyId, mail);
 			return "Message saved Successfully";
 		} else {
 			logger.info("Policy validity is sufficient. No notification saved.");
 			return "The validity period is up to mark";
 		}
+	}
+
+	@Override
+	public void sendMail(String toMail, String subject, String body) {
+
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setSubject("regarding your Insurance policy");
+		message.setText(subject);
+		message.setTo(toMail);
+		mailSender.send(message);
+
 	}
 }

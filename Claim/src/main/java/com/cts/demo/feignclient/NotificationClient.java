@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface NotificationClient {
 
 //Sends a notification message to a customer for a specific policy
-	@PostMapping("/send/{message}/{cId}/{pId}")
+	@PostMapping("/send/{message}/{cId}/{pId}/{email}")
 	public String sendNotification(@PathVariable("message") String message, @PathVariable("cId") long customerId,
-			@PathVariable("pId") long policyId);
+			@PathVariable("pId") long policyId, @PathVariable("email") String customerMail);
 
-//Saves a notification message to the system for a customer and policy
-	@PostMapping("/noti/{msg}/{cId}/{pId}")
+	// Directly saves a notification to the database
+	@PostMapping("/noti/{msg}/{cId}/{pId}/{email}")
 	public String notify(@PathVariable("msg") String message, @PathVariable("cId") long customerId,
-			@PathVariable("pId") long policyId);
+			@PathVariable("pId") long policyId, @PathVariable("email") String customerMail);
 }

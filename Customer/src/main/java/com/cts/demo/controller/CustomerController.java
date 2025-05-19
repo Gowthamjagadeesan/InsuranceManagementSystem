@@ -1,5 +1,7 @@
 package com.cts.demo.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,5 +105,10 @@ public class CustomerController {
 			@PathVariable("pType") String policyType) throws CustomerNotFoundException {
 		logger.info("Assigning policy (ID: {}) of type '{}' to customer (ID: {})", policyId, policyType, customerId);
 		return service.assignPoliciesToCustomer(policyId, customerId, policyType);
+	}
+
+	@GetMapping("/getAllCustomers")
+	public List<Customer> getAllCustomer() {
+		return service.getAllCustomer();
 	}
 }

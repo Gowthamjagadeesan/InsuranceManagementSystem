@@ -11,12 +11,12 @@ public interface NotificationClient {
 
 	// Sends a notification (typically with logic to check policy validity before
 	// saving)
-	@PostMapping("/send/{msg}/{cId}/{pId}")
-	public String sendNotification(@PathVariable("msg") String message, @PathVariable("cId") long customerId,
-			@PathVariable("pId") long policyId);
+	@PostMapping("/send/{message}/{cId}/{pId}/{email}")
+	public String sendNotification(@PathVariable("message") String message, @PathVariable("cId") long customerId,
+			@PathVariable("pId") long policyId, @PathVariable("email") String customerMail);
 
 	// Directly saves a notification to the database
-	@PostMapping("/noti/{msg}/{cId}/{pId}")
+	@PostMapping("/noti/{msg}/{cId}/{pId}/{email}")
 	public String notify(@PathVariable("msg") String message, @PathVariable("cId") long customerId,
-			@PathVariable("pId") long policyId);
+			@PathVariable("pId") long policyId, @PathVariable("email") String customerMail);
 }

@@ -23,9 +23,9 @@ class NotificationApplicationTests {
 
 	@Test
 	void savePolicy() {
-		Notification notification = new Notification(123, 1234, 70000, "hospinal expences");
+		Notification notification = new Notification(123, 1234, 70000, "hospinal expences", "gowtham@gmail.com", "9443126900");
 		Mockito.when(notificationRepository.save(notification)).thenReturn(notification);
-		String response = notificationService.saveNotification("hospinal expences", 1234, 70000);
+		String response = notificationService.saveNotification("hospinal expences", 1234, 70000, "gowtham@gmail.com");
 		assertEquals("Notification saved Successfully", response);
 	}
 }

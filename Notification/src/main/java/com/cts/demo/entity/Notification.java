@@ -37,4 +37,8 @@ public class Notification {
 
 	// The message content of the notification
 	private String message;
+
+	private String customerMail;
+	
+	private String phoneNumber;
 }

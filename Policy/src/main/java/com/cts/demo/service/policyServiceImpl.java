@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
+import com.cts.demo.dto.Policy1;
 import com.cts.demo.exception.PolicyNotFoundException;
 import com.cts.demo.feignclient.AgentClient;
 import com.cts.demo.feignclient.CustomerClient;
@@ -46,10 +47,13 @@ public class policyServiceImpl implements policyService {
 		logger.info("Saving policy: {}", policy);
 		Policy policy1 = repository.save(policy);
 		logger.info("Policy saved: {}", policy1);
-
 		// Notify about the new policy creation
-		notificationClient.notify("A New Policy " + policy1.getPolicyName() + " is been created", policy1.getPolicyId(),
-				policy1.getPolicyId());
+		List<Customer> customers = customerClient.getAllCustomer();
+
+		for (Customer cust : customers) {
+			notificationClient.notify("A New Policy " + policy1.getPolicyName() + " is been created",
+					cust.getCustomerId(), policy1.getPolicyId(), cust.getCustomerEmail());
+		}
 		logger.info("Notification sent for new policy creation: {}", policy1.getPolicyName());
 
 		return "Policy saved Successfully";
@@ -95,7 +99,9 @@ public class policyServiceImpl implements policyService {
 	@Override
 	public Customer assignPolicyToCustomer(long policyId, long customerId, String policyType) {
 		logger.info("Assigning policy (ID: {}) of type '{}' to customer (ID: {})", policyId, policyType, customerId);
-		notificationClient.notify(policyType + " is assigned to you", customerId, policyId);
+		Customer customer = customerClient.getCustomer(customerId);
+		notificationClient.notify(policyType + " is assigned to you", customerId, policyId,
+				customer.getCustomerEmail());
 		return customerClient.assignPoliciesToCustomer(policyId, customerId, policyType);
 	}
 

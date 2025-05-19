@@ -44,6 +44,8 @@ public class ClaimServiceImpl implements ClaimService {
 	public String fileClaim(Claim claim) {
 		log.info("Inside service implementation of the file claim module");
 		Claim c = repository.save(claim);
+		notificationClient.notify("Your new claim is applied successfully please wait for further approval!!!!",
+				claim.getCustomerId(), claim.getPolicyId(), claim.getCustomerMail());
 		return (c != null) ? "New claim request has been filed successfully" : "Something went wrong";
 	}
 
@@ -74,15 +76,15 @@ public class ClaimServiceImpl implements ClaimService {
 			log.info("The claim status changed to approved");
 
 			notificationClient.sendNotification("Your Policy validity period is less than 10 days", claimId,
-					policy.getPolicyId());
+					policy.getPolicyId(), claim.getCustomerMail());
 			notificationClient.notify("Claim status Changed to APPROVED!!!!", claim.getCustomerId(),
-					policy.getPolicyId());
+					policy.getPolicyId(), claim.getCustomerMail());
 		} else {
 			repository.updateClaimStatus("REJECTED", claimId);
 			log.warn("The claim status changed to Rejected");
 
 			notificationClient.notify("Claim status Changed to REJECTED!!!! Kindly verify", claim.getCustomerId(),
-					policy.getPolicyId());
+					policy.getPolicyId(), claim.getCustomerMail());
 		}
 		Optional<Claim> optionalClaim = repository.findById(claimId);
 		if (optionalClaim.isPresent()) {
@@ -105,7 +107,7 @@ public class ClaimServiceImpl implements ClaimService {
 
 		String status = optional.get().getClaimStatus();
 		notificationClient.notify("Your claim status is " + status, optional.get().getCustomerId(),
-				optional.get().getClaimId());
+				optional.get().getClaimId(), optional.get().getCustomerMail());
 		log.info("The Notifications are stored in Table");
 
 		return status;
@@ -137,13 +139,14 @@ public class ClaimServiceImpl implements ClaimService {
 			repository.updateClaimStatus("IN-REVIEW", claimId);
 			log.warn("The claim status changed to IN-REVIEW");
 
-			notificationClient.notify("Your claim status is changed", claim.getCustomerId(), policy.getPolicyId());
+			notificationClient.notify("Your claim status is changed", claim.getCustomerId(), policy.getPolicyId(),
+					claim.getCustomerMail());
 		} else {
 			repository.updateClaimStatus("REJECTED", claimId);
 			log.warn("The claim status changed to Rejected");
 
 			notificationClient.notify("Your claim validity period is expired", claim.getCustomerId(),
-					policy.getPolicyId());
+					policy.getPolicyId(), claim.getCustomerMail());
 		}
 		Optional<Claim> optionalClaim = repository.findById(claimId);
 		if (optionalClaim.isPresent()) {

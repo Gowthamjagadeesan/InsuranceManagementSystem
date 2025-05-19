@@ -36,6 +36,8 @@ public class Claim {
 
 	// ID of the customer who filed the claim
 	private long customerId;
+	
+	private String customerMail;
 
 	// ID of the agent handling the claim
 	private long agentId;

@@ -32,12 +32,12 @@ public class NotifiocationController {
 	 * @param policyId   the ID of the policy
 	 * @return confirmation message
 	 */
-	@PostMapping("/noti/{msg}/{cId}/{pId}")
+	@PostMapping("/noti/{msg}/{cId}/{pId}/{email}")
 	public String notify(@PathVariable("msg") String message, @PathVariable("cId") long customerId,
-			@PathVariable("pId") long policyId) {
+			@PathVariable("pId") long policyId, @PathVariable("email") String customerMail) {
 		logger.info("Saving notification - Message: '{}', Customer ID: {}, Policy ID: {}", message, customerId,
 				policyId);
-		return service.saveNotification(message, customerId, policyId);
+		return service.saveNotification(message, customerId, policyId, customerMail);
 	}
 
 	/**
@@ -51,11 +51,11 @@ public class NotifiocationController {
 	 * @param policyId   the ID of the policy
 	 * @return confirmation message
 	 */
-	@PostMapping("/send/{message}/{cId}/{pId}")
+	@PostMapping("/send/{message}/{cId}/{pId}/{email}")
 	public String sendNotification(@PathVariable("message") String message, @PathVariable("cId") long customerId,
-			@PathVariable("pId") long policyId) {
+			@PathVariable("pId") long policyId, @PathVariable("email") String customerMail) {
 		logger.info("Sending notification - Message: '{}', Customer ID: {}, Policy ID: {}", message, customerId,
 				policyId);
-		return service.sendNotification(message, customerId, policyId);
+		return service.sendNotification(message, customerId, policyId, customerMail);
 	}
 }
