@@ -68,4 +68,9 @@ public interface ClaimService {
 	 * @return confirmation message
 	 */
 	String deleteClaimById(long claimId);
+	
+	Claim updateclaim(Claim claim);
+	
+	
+	public abstract List<Claim> findByCustomerId(long customerId);
 }

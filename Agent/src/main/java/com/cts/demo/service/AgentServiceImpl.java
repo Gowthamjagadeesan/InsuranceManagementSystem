@@ -2,6 +2,8 @@ package com.cts.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +93,7 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public Agent searchAgentByName(String agentName) throws AgentNotFoundException {
 		log.info("Inside service Implementation of search agent by name agent module");
-		Agent agent = repository.findByAgentName(agentName);
+		Agent agent = repository.findByName(agentName);
 		log.info("Find by agent name is executed");
 		if (agent != null) {
 			return agent;
@@ -137,5 +139,35 @@ public class AgentServiceImpl implements AgentService {
 			log.info("Policy is assigned to the agent successfully");
 			return agent;
 		}
+	}
+
+	@Override
+	public Agent findAgentByPolicyId(long policyId) {
+		
+		return repository.findAgentByPolicyId(policyId);
+	}
+
+	@Override
+	public List<Policy> getPolicyByAgent(long agentId) {
+
+		Optional<Agent> opt= repository.findById(agentId);
+		return opt.get().getPolicies();
+	}
+
+	@Override
+	public Agent removePolicyFromCustomer(Long policyId) throws AgentNotFoundException {
+		Agent agent = repository.findAgentByPolicyId(policyId);
+		if (agent == null) {
+			throw new AgentNotFoundException("There is no customer in the given Id....");
+		}
+
+		List<Policy> updatedPolicies = agent.getPolicies().stream()
+				.filter(policy -> policy.getPolicyId() != policyId).collect(Collectors.toList());
+
+		agent.setPolicies(updatedPolicies);
+		repository.save(agent);
+
+		repository.deleteById(policyId);
+		return agent;
 	}
 }

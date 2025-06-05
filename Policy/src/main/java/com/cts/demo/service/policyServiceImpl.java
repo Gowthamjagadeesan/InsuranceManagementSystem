@@ -52,7 +52,7 @@ public class policyServiceImpl implements policyService {
 
 		for (Customer cust : customers) {
 			notificationClient.notify("A New Policy " + policy1.getPolicyName() + " is been created",
-					cust.getCustomerId(), policy1.getPolicyId(), cust.getCustomerEmail());
+					cust.getCustomerId(), policy1.getPolicyId(), cust.getEmail());
 		}
 		logger.info("Notification sent for new policy creation: {}", policy1.getPolicyName());
 
@@ -85,6 +85,8 @@ public class policyServiceImpl implements policyService {
 	public String archivePolicy(long policyId) {
 		logger.info("Archiving policy with ID: {}", policyId);
 		repository.deleteById(policyId);
+		customerClient.removePolicyFromCustomer(policyId);
+		agentClient.removePolicyFromAgent(policyId);
 		return "Policy deleted Successfully";
 	}
 
@@ -101,7 +103,7 @@ public class policyServiceImpl implements policyService {
 		logger.info("Assigning policy (ID: {}) of type '{}' to customer (ID: {})", policyId, policyType, customerId);
 		Customer customer = customerClient.getCustomer(customerId);
 		notificationClient.notify(policyType + " is assigned to you", customerId, policyId,
-				customer.getCustomerEmail());
+				customer.getEmail());
 		return customerClient.assignPoliciesToCustomer(policyId, customerId, policyType);
 	}
 

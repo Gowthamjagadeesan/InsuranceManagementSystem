@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.demo.exception.AgentNotFoundException;
 import com.cts.demo.model.Agent;
+import com.cts.demo.model.Policy;
 import com.cts.demo.service.AgentService;
 
 @RestController
@@ -116,4 +117,20 @@ public class AgentController {
 		log.info("activating assign policies to agent in controller");
 		return service.assignPoliciesToAgent(policyId, agentId, policyType);
 	}
+	@GetMapping("/getAgentByPolicy/{pid}")
+	public Agent findAgentByPolicyId(@PathVariable("pid") long policyId) {
+		return service.findAgentByPolicyId(policyId);
+	}
+	
+	@GetMapping("/getPolicyByAgent/{id}")
+	public List<Policy> getPolicyByAgent(@PathVariable("id") long agentId) {
+		return service.getPolicyByAgent(agentId);
+	}
+	
+	@DeleteMapping("/remove-policy/{pid}")
+	public  Agent removePolicyFromAgent(@PathVariable("pid") Long policyId) throws AgentNotFoundException{
+		return service.removePolicyFromCustomer(policyId);
+	}
+	
+	
 }

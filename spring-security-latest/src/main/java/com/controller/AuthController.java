@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,5 +63,10 @@ public class AuthController {
     public String getRoles(@PathVariable String username)
     {
     	return service.getRoles(username);
+    }
+    
+    @DeleteMapping("/delete/{name}/{role}")
+    public String deleteByName(@PathVariable("name") String name,@PathVariable("role") String role) {
+    	return service.deleteByName(name,role);
     }
 }

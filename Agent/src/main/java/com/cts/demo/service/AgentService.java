@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cts.demo.exception.AgentNotFoundException;
 import com.cts.demo.model.Agent;
+import com.cts.demo.model.Policy;
 
 //Service interface for Agent-related operations
 public interface AgentService {
@@ -29,4 +30,10 @@ public interface AgentService {
 //Assigns a policy to an agent and returns the updated agent object
 	public abstract Agent assignPoliciesToAgent(long policyId, long agentId, String policyType)
 			throws AgentNotFoundException;
+	
+	public abstract Agent findAgentByPolicyId(long policyId);
+	
+	public abstract  List<Policy> getPolicyByAgent(long agentId);
+	
+	public abstract  Agent removePolicyFromCustomer(Long policyId) throws AgentNotFoundException ;
 }

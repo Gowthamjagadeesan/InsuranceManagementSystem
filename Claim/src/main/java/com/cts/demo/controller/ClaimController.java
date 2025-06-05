@@ -115,4 +115,12 @@ public class ClaimController {
 		log.info("Inside controller of the delete claim by Id module");
 		return service.deleteClaimById(claimId);
 	}
+	@PutMapping("/updateClaim")
+	public Claim updateclaim(@RequestBody Claim claim) {
+			return service.updateclaim(claim);
+	}
+	@GetMapping("/findByCustId/{cid}")
+	public List<Claim> findByCustomerId(@PathVariable("cid") long customerId){
+		return service.findByCustomerId(customerId);
+	}
 }

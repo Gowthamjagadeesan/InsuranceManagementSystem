@@ -5,6 +5,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -28,20 +30,20 @@ public class Agent {
 	 * Primary key for the Agent entity. Must be greater than 10.
 	 */
 	@Id
-	@Min(value = 10, message = "The value should be greater than 10")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long agentId;
 
 	/**
 	 * Name of the agent. Cannot be null or empty.
 	 */
 	@NotEmpty(message = "Agent Name should not be null or blank")
-	private String agentName;
+	private String name;
 
 	/**
 	 * Contact information for the agent. Cannot be null or empty.
 	 */
 	@NotEmpty(message = "Agent contact_info Should not be null or blank")
-	private String contactInfo;
+	private String email;
 
 	/**
 	 * List of policies associated with the agent. Uses a one-to-many relationship
@@ -59,7 +61,7 @@ public class Agent {
 			@NotEmpty(message = "Agent Name should not be null or blank") String agentName,
 			@NotEmpty(message = "Agent contact_info Should not be null or blank") String contactInfo) {
 		this.agentId = agentId;
-		this.agentName = agentName;
-		this.contactInfo = contactInfo;
+		this.name = agentName;
+		this.email = contactInfo;
 	}
 }

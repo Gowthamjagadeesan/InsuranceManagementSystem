@@ -199,4 +199,16 @@ public class ClaimServiceImpl implements ClaimService {
 		log.info("Claim is deleted by Module");
 		return "Claim deleted Successfully";
 	}
+
+	@Override
+	public Claim updateclaim(Claim claim) {
+		
+		return repository.save(claim);
+	}
+
+	@Override
+	public List<Claim> findByCustomerId(long customerId) {
+		
+		return repository.findByCustomerId(customerId);
+	}
 }

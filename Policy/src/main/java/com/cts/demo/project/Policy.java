@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
@@ -40,7 +41,8 @@ public class Policy {
 	private String policyName;
 
 	// Premium amount must be at least 50,000
-	@Min(value = 50000, message = "Enter a valid premium amount")
+	@Min(value = 10000, message = "Enter a valid premium amount")
+	@Max(value = 1000000, message = "Maximum amount reached")
 	private double premiumAmount;
 
 	// Description of what the policy covers; must not be empty

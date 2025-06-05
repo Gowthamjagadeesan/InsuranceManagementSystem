@@ -34,4 +34,14 @@ public class UserService {
 		}
 		return "Not Found";
 	}
+	public String deleteByName(String name,String role) {
+		int a= repository.deleteByName(name,role);
+		if(a>0) {
+			return "Agent Deleted";
+		}
+		else {
+			return "Not Deleted";
+		}
+		
+	}
 }

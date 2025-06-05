@@ -1,11 +1,13 @@
 package com.cts.demo.feignclient;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.cts.demo.dto.Agent;
+import com.cts.demo.dto.Customer;
 
 //Declares this interface as a Feign client for communicating with the "AGENT" microservice
 //All requests made through this client will be prefixed with "/agent"
@@ -22,4 +24,7 @@ public interface AgentClient {
 	@PutMapping("/assignPoliciesToAgent/{pid}/{aid}/{pType}")
 	public Agent assignPoliciesToAgent(@PathVariable("pid") long policyId, @PathVariable("aid") long customerId,
 			@PathVariable("pType") String policyType);
+	
+	@DeleteMapping("/remove-policy/{pid}")
+	public  Agent removePolicyFromAgent(@PathVariable("pid") Long policyId);
 }

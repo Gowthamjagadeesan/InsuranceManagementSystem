@@ -24,10 +24,10 @@ public class Agent {
 	private long agentId;
 
 	// Name of the agent
-	private String agentName;
+	private String name;
 
 	// Contact information (e.g., phone number or email)
-	private String contactInfo;
+	private String email;
 
 	// One-to-many relationship with Policy2 entity
 	// CascadeType.ALL: all operations (persist, merge, remove, etc.) will cascade

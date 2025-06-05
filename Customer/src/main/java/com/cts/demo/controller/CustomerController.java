@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.demo.exception.CustomerNotFoundException;
 import com.cts.demo.model.Customer;
+import com.cts.demo.model.Policy1;
 import com.cts.demo.service.CustomerService;
 
 /**
@@ -23,6 +24,7 @@ import com.cts.demo.service.CustomerService;
  */
 @RestController
 @RequestMapping("/customer")
+//@CrossOrigin("*")
 public class CustomerController {
 
 	Logger logger = LoggerFactory.getLogger(CustomerController.class);
@@ -106,9 +108,19 @@ public class CustomerController {
 		logger.info("Assigning policy (ID: {}) of type '{}' to customer (ID: {})", policyId, policyType, customerId);
 		return service.assignPoliciesToCustomer(policyId, customerId, policyType);
 	}
-
+	
+	
 	@GetMapping("/getAllCustomers")
 	public List<Customer> getAllCustomer() {
 		return service.getAllCustomer();
+	}
+	
+	@GetMapping("/getPolicyByCustomer/{id}")
+	public List<Policy1> getPolicyByCustomer(@PathVariable("id") long customerId) {
+		return service.getPolicyByCustomer(customerId);
+	}
+	@DeleteMapping("/remove-policy/{pid}")
+	public  Customer removePolicyFromCustomer(@PathVariable("pid") Long policyId) throws CustomerNotFoundException{
+		return service.removePolicyFromCustomer(policyId);
 	}
 }

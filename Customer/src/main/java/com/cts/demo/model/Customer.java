@@ -5,6 +5,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -37,16 +39,17 @@ public class Customer {
 	@Id
 
 	// Ensures the customer ID is a positive number
-	@Positive(message = "The value should not be negative")
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long customerId;
 
 	// Ensures the customer name is not null or blank
 	@NotEmpty(message = "Customer Name should not be null or blank")
-	private String customerName;
+	private String name;
 
 	// Validates that the email is in a proper format
 	@Email(message = "Enter a valid email Id")
-	private String customerEmail;
+	private String email;
 
 	// Validates that the phone number is between 10 and 12 characters
 	@Size(max = 12, min = 10, message = "Enter a valid phone number")
@@ -71,8 +74,8 @@ public class Customer {
 	public Customer(String customerName, String customerEmail, String customerPhone, String customerAddress,
 			List<Policy1> policies) {
 		super();
-		this.customerName = customerName;
-		this.customerEmail = customerEmail;
+		this.name = customerName;
+		this.email = customerEmail;
 		this.customerPhone = customerPhone;
 		this.customerAddress = customerAddress;
 		this.policies = policies;

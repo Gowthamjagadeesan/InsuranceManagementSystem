@@ -1,5 +1,7 @@
 package com.cts.demo.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +26,7 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
 
 	// Abstract method to be implemented by Spring Data JPA to execute the update
 	public abstract int updateClaimStatus(String status, long claimId);
+
+	public abstract List<Claim> findByCustomerId(long customerId);
+
 }

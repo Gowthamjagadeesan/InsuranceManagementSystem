@@ -24,10 +24,10 @@ public class Customer {
 	private long customerId;
 
 	// Name of the customer
-	private String customerName;
+	private String name;
 
 	// Email address of the customer
-	private String customerEmail;
+	private String email;
 
 	// Phone number of the customer
 	private String customerPhone;

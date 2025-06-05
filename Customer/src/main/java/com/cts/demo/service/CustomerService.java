@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cts.demo.exception.CustomerNotFoundException;
 import com.cts.demo.model.Customer;
+import com.cts.demo.model.Policy1;
 
 //Service interface for handling business logic related to Customer operations
 public interface CustomerService {
@@ -31,4 +32,10 @@ public interface CustomerService {
 	// Throws CustomerNotFoundException if the customer is not found
 	public abstract Customer assignPoliciesToCustomer(long policyId, long customerId, String policyType)
 			throws CustomerNotFoundException;
+
+	public abstract  List<Policy1> getPolicyByCustomer(long customerId);
+	
+	public abstract  Customer removePolicyFromCustomer(Long policyId) throws CustomerNotFoundException ;
+	
+	
 }

@@ -35,11 +35,13 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(requests -> requests
-						.requestMatchers("/auth/authenticate", "/auth/getroles/**", "/auth/**").permitAll())
-				.authorizeHttpRequests(requests -> requests
-						.requestMatchers("/agent/**", "/claim/**", "/customer/**", "/notify/**", "/policy/**")
-						.authenticated())
+				.authorizeHttpRequests(requests -> requests.requestMatchers("/auth/authenticate", "/auth/getroles/**",
+						"/auth/**", "/customer/create", "/auth/delete/**", "/agent/save").permitAll())
+				.authorizeHttpRequests(requests -> requests.requestMatchers("/agent/searchById/**", "/agent/searchAll",
+						"/agent/searchByName/**", "/agent/update", "/agent/delete/**", "/agent/getAgentByPolicy/**",
+						"/agent/getPolicyByAgent/**", "/claim/**", "/customer/update", "/customer/delete/**",
+						"/customer/searchByName/**", "/customer/searchById/**", "/customer/getAllCustomers",
+						"/customer/remove-policy/", "/notify/**", "/policy/**").authenticated())
 				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).build();

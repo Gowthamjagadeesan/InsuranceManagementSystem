@@ -3,6 +3,7 @@ package com.cts.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cts.demo.exception.CustomerNotFoundException;
+import com.cts.demo.feignclient.NotificationClient;
 import com.cts.demo.model.Customer;
 import com.cts.demo.model.Policy1;
 import com.cts.demo.repository.CustomerRepository;
@@ -24,6 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
 	// Injects the CustomerRepository to interact with the database
 	@Autowired
 	CustomerRepository repository;
+	
+	@Autowired
+	NotificationClient notificationClient;
 
 	// Saves a new customer to the database
 	@Override
@@ -72,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer searchCustomerByName(String customerName) {
 		logger.info("Searching for customer by name: {}", customerName);
-		return repository.findByCustomerName(customerName);
+		return repository.findByName(customerName);
 	}
 
 	// Retrieves all customers from the database
@@ -106,7 +111,34 @@ public class CustomerServiceImpl implements CustomerService {
 
 		// Save the updated customer
 		repository.save(customer);
+		notificationClient.notify(policyType + " is assigned to you", customerId, policyId,
+				customer.getEmail());
 		logger.info("Policy assigned successfully to customer: {}", customer);
 		return customer;
+	}
+
+	@Override
+	public List<Policy1> getPolicyByCustomer(long customerId) {
+
+		Optional<Customer> opt = repository.findById(customerId);
+		return opt.get().getPolicies();
+	}
+
+	@Override
+	public Customer removePolicyFromCustomer(Long policyId) throws CustomerNotFoundException {
+		Customer customer = repository.findCustomerByPolicyId(policyId);
+		if (customer == null) {
+			throw new CustomerNotFoundException("There is no customer in the given Id....");
+		}
+
+		List<Policy1> updatedPolicies = customer.getPolicies().stream()
+				.filter(policy -> policy.getPolicyId() != policyId).collect(Collectors.toList());
+
+		customer.setPolicies(updatedPolicies);
+		repository.save(customer);
+
+		repository.deleteById(policyId);
+		return customer;
+
 	}
 }
