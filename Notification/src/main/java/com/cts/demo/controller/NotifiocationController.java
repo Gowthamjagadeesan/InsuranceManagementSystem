@@ -1,13 +1,19 @@
 package com.cts.demo.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cts.demo.entity.Notification;
 import com.cts.demo.service.NotificationService;
 
 /**
@@ -15,6 +21,7 @@ import com.cts.demo.service.NotificationService;
  */
 @RestController
 @RequestMapping("/notify")
+@CrossOrigin("*")
 public class NotifiocationController {
 
 	private static final Logger logger = LoggerFactory.getLogger(NotifiocationController.class);
@@ -57,5 +64,14 @@ public class NotifiocationController {
 		logger.info("Sending notification - Message: '{}', Customer ID: {}, Policy ID: {}", message, customerId,
 				policyId);
 		return service.sendNotification(message, customerId, policyId, customerMail);
+	}
+	
+	@GetMapping("/get/{id}")
+	public List<Notification> get(@PathVariable("id") long cid){
+			return service.getNotificationById(cid);
+	}
+	@DeleteMapping("/deleteById/{nid}")
+	public String delete(@PathVariable("nid") long nid) {
+		return service.delete(nid);
 	}
 }

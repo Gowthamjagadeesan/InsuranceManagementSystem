@@ -73,7 +73,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 		} else if ("CUSTOMER".equalsIgnoreCase(role)) {
 			return path.startsWith("/customer")
 					&& (method.equalsIgnoreCase("PUT") || path.startsWith("/customer/getPolicyByCustomer/")
-							|| path.startsWith("/customer/searchByName/")
+							|| path.startsWith("/customer/searchById/") || path.startsWith("/customer/searchByName/")
 							|| path.startsWith("/customer/remove-policy/"))
 					|| path.startsWith("/claim")
 							&& (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("DELETE")

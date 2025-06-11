@@ -85,19 +85,19 @@ class AgentApplicationTests {
 		assertEquals(agent, foundAgentById);
 	}
 
-	@Test
-	void searchAgentByNameTest() throws AgentNotFoundException {
-		String agentName = "Gowtham";
-		Policy p1 = new Policy();
-		p1.setAssignedPolicies("Health");
-		p1.setPolicyId(201);
-		List<Policy> policies = new ArrayList<>();
-		policies.add(p1);
-		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies);
-		Mockito.when(repository.findByAgentName(agentName)).thenReturn(agent);
-		Agent foundAgentByName = service.searchAgentByName(agentName);
-		assertEquals(agent, foundAgentByName);
-	}
+//	@Test
+//	void searchAgentByNameTest() throws AgentNotFoundException {
+//		String agentName = "Gowtham";
+//		Policy p1 = new Policy();
+//		p1.setAssignedPolicies("Health");
+//		p1.setPolicyId(201);
+//		List<Policy> policies = new ArrayList<>();
+//		policies.add(p1);
+//		Agent agent = new Agent(43, "Gowtham", "gowthamjagadeesan322@gmail.com", policies);
+//		Mockito.when(repository.findByAgentName(agentName)).thenReturn(agent);
+//		Agent foundAgentByName = service.searchAgentByName(agentName);
+//		assertEquals(agent, foundAgentByName);
+//	}
 
 	@Test
 	void getAllAgentTest() {

@@ -111,8 +111,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 		// Save the updated customer
 		repository.save(customer);
-		notificationClient.notify(policyType + " is assigned to you", customerId, policyId,
-				customer.getEmail());
+		//notificationClient.notify(policyType + " is assigned to you", customerId, policyId,
+		//		customer.getEmail());
 		logger.info("Policy assigned successfully to customer: {}", customer);
 		return customer;
 	}

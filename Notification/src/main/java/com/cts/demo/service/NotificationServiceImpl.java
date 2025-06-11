@@ -2,6 +2,7 @@ package com.cts.demo.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
 		notification.setCustomerId(customerId);
 		notification.setPolicyId(policyId);
 		repository.save(notification);
-		sendMail(email, message, email);
+		//sendMail(email, message, email);
 		logger.info("Notification saved successfully for Customer ID: {}", customerId);
 		return "Notification saved Successfully";
 	}
@@ -94,5 +95,17 @@ public class NotificationServiceImpl implements NotificationService {
 		message.setTo(toMail);
 		mailSender.send(message);
 
+	}
+
+	@Override
+	public List<Notification> getNotificationById(long id) {
+		
+		return repository.findByCustomerId(id);
+	}
+
+	@Override
+	public String delete(long nid) {
+		repository.deleteById(nid);
+		return "deleted successfully";
 	}
 }

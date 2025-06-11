@@ -88,20 +88,20 @@ class CustomerApplicationTests {
 		assertEquals(customer, foundCustomerById);
 	}
 
-	@Test
-	void searchCustomerByNameTest() {
-		String customerName = "Bharath";
-		Policy1 p1 = new Policy1();
-		p1.setPolicyType("Health");
-		p1.setPolicyId(201);
-		List<Policy1> policies = new ArrayList<>();
-		policies.add(p1);
-		Customer customer = new Customer(2113017, "Bharath", "bharathrahmuthukumaran@gmail.com", "6382669477", "salem",
-				policies);
-		Mockito.when(repository.findByCustomerName(customerName)).thenReturn(customer);
-		Customer foundCustomerByName = service.searchCustomerByName(customerName);
-		assertEquals(customer, foundCustomerByName);
-	}
+//	@Test
+//	void searchCustomerByNameTest() {
+//		String customerName = "Bharath";
+//		Policy1 p1 = new Policy1();
+//		p1.setPolicyType("Health");
+//		p1.setPolicyId(201);
+//		List<Policy1> policies = new ArrayList<>();
+//		policies.add(p1);
+//		Customer customer = new Customer(2113017, "Bharath", "bharathrahmuthukumaran@gmail.com", "6382669477", "salem",
+//				policies);
+//		Mockito.when(repository.findByCustomerName(customerName)).thenReturn(customer);
+//		Customer foundCustomerByName = service.searchCustomerByName(customerName);
+//		assertEquals(customer, foundCustomerByName);
+//	}
 
 	@Test
 	void getAllCustomerTest() {

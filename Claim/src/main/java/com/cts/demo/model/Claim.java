@@ -46,7 +46,7 @@ public class Claim {
 	private long policyId;
 
 	// Validation constraint to ensure the claim amount is at least 20,000
-	@Min(value = 20000, message = "The minimum amount should be 20000rs")
+	@Min(value = 15000, message = "The minimum amount should be 20000rs")
 
 	// Validation constraint to ensure the claim amount does not exceed 500,000
 	@Max(value = 500000, message = "The maximum amount should be 500000rs")

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.cts.demo.dto.Agent;
 import com.cts.demo.dto.Customer;
-import com.cts.demo.dto.Policy1;
 import com.cts.demo.exception.PolicyNotFoundException;
 import com.cts.demo.feignclient.AgentClient;
 import com.cts.demo.feignclient.CustomerClient;
@@ -102,8 +101,8 @@ public class policyServiceImpl implements policyService {
 	public Customer assignPolicyToCustomer(long policyId, long customerId, String policyType) {
 		logger.info("Assigning policy (ID: {}) of type '{}' to customer (ID: {})", policyId, policyType, customerId);
 		Customer customer = customerClient.getCustomer(customerId);
-		notificationClient.notify(policyType + " is assigned to you", customerId, policyId,
-				customer.getEmail());
+		notificationClient.notify("A new Policy called "+policyType+"is assigned to you",
+				customerId, policyId, customer.getEmail());
 		return customerClient.assignPoliciesToCustomer(policyId, customerId, policyType);
 	}
 
